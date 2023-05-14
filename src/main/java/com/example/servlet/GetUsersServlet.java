@@ -15,9 +15,14 @@ import java.util.Set;
 @WebServlet("/users")
 public class GetUsersServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
        Set<User> allUsers = Warehouse.getInstance().getUsers();
        req.setAttribute("users", allUsers);
-        req.getRequestDispatcher("/jsp/users.jsp").forward(req,resp);
+       try{
+           req.getRequestDispatcher("/jsp/users.jsp").forward(req,resp);
+       }catch (ServletException | IOException e){
+           e.printStackTrace();
+       }
+
     }
 }
